@@ -33,14 +33,17 @@ jobs:
           mkdir -p pkg/FanControl-linux-x86_64/kmod
           cp kmod/Makefile kmod/ideapad_fan_pwm.c kmod/install.sh pkg/FanControl-linux-x86_64/kmod/
           tar -C pkg -czf FanControl-linux-x86_64.tar.gz FanControl-linux-x86_64
-          cp dist/FanControl.exe FanControl-windows-x64.exe
+          mkdir -p pkg/FanControl-windows-x64/licenses
+          cp dist/FanControl.exe dist/LpcIO.bin dist/PawnIO_setup.exe dist/THIRD_PARTY.md README.md LICENSE pkg/FanControl-windows-x64/
+          cp dist/licenses/* pkg/FanControl-windows-x64/licenses/
+          (cd pkg && zip -r ../FanControl-windows-x64.zip FanControl-windows-x64)
 
       - uses: actions/upload-artifact@v4
         with:
           name: FanControl
           path: |
             FanControl-linux-x86_64.tar.gz
-            FanControl-windows-x64.exe
+            FanControl-windows-x64.zip
 
       - name: Publish release
         if: startsWith(github.ref, 'refs/tags/v')
@@ -48,4 +51,4 @@ jobs:
         with:
           files: |
             FanControl-linux-x86_64.tar.gz
-            FanControl-windows-x64.exe
+            FanControl-windows-x64.zip

@@ -1,7 +1,7 @@
 #!/bin/sh
 # Build into dist/ and generate the app icons.
 #   dist/FanControl      Linux x86_64 (needs only glibc + GTK 3 at runtime)
-#   dist/FanControl.exe  Windows x64 (static; needs PawnIO and LpcIO.bin, see README)
+#   dist/FanControl.exe  Windows x64 (static; dist/ also holds the bundled PawnIO installer and LpcIO.bin)
 #
 # Build requirements (Ubuntu): sudo apt install gcc libgtk-3-dev gcc-mingw-w64-x86-64
 # The Windows build is skipped when MinGW is not installed.

@@ -4,8 +4,8 @@
 1 RT_MANIFEST "app.manifest"
 
 1 VERSIONINFO
-FILEVERSION 2,1,0,0
-PRODUCTVERSION 2,1,0,0
+FILEVERSION 2,2,0,0
+PRODUCTVERSION 2,2,0,0
 BEGIN
   BLOCK "StringFileInfo"
   BEGIN
@@ -13,8 +13,8 @@ BEGIN
     BEGIN
       VALUE "FileDescription", "Fan Control"
       VALUE "ProductName", "Fan Control for IdeaPad 3 14ALC6"
-      VALUE "FileVersion", "2.1.0"
-      VALUE "ProductVersion", "2.1.0"
+      VALUE "FileVersion", "2.2.0"
+      VALUE "ProductVersion", "2.2.0"
       VALUE "OriginalFilename", "FanControl.exe"
     END
   END

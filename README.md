@@ -83,7 +83,8 @@ Prebuilt binaries are in [`dist/`](dist):
 | File | For |
 |---|---|
 | `dist/FanControl` | Linux x86_64 (needs GTK 3, which Ubuntu, Fedora, Mint and others ship) |
-| `dist/FanControl.exe` | Windows x64 (needs PawnIO and `LpcIO.bin`, see [Windows](#windows)) |
+| `dist/FanControl.exe` | Windows x64 (steady speed with PawnIO and `LpcIO.bin`, pulsing speed without; see [Windows](#windows)) |
+| `dist/LpcIO.bin`, `dist/PawnIO_setup.exe` | PawnIO's module and installer, bundled for Windows (see [`dist/THIRD_PARTY.md`](dist/THIRD_PARTY.md)) |
 
 The kernel driver is not prebuilt: it has to be built and signed on your own machine, which `kmod/install.sh` does.
 
@@ -114,26 +115,40 @@ FanControl dust
 
 ## Windows
 
-`dist/FanControl.exe` does the same on Windows, with Secure Boot on. Windows does not let a program touch I/O ports, so it uses [PawnIO](https://pawnio.eu), a signed kernel driver that runs small signed modules; its official `LpcIO` module provides exactly the Super I/O register access needed to reach the EC's PWM register.
+`dist/FanControl.exe` does the same on Windows, with Secure Boot on, and has the same window as the Linux app. It uses the best of two methods:
 
-**Not yet tested on Windows.** The EC access sequence and the control logic are the ones verified on Linux, and the program builds cleanly, but nobody has run it against a real PawnIO install yet.
+| Method | Speed | Needs |
+|---|---|---|
+| 1. PWM register through [PawnIO](https://pawnio.eu) | Steady | PawnIO installed, `LpcIO.bin` next to `FanControl.exe` |
+| 2. Switching the firmware's fan mode through Lenovo's Energy Management driver (`\\.\EnergyDrv`, the ACPI `VPC2004` device Lenovo Vantage uses) | Swings around an average, never below automatic | Lenovo's driver, normally preinstalled |
+
+PawnIO is optional: without it the app falls back to method 2, like the Linux app without its kernel driver. Dust Cleaning always uses method 2.
+
+Windows does not let a program touch I/O ports, so method 1 uses PawnIO, a signed kernel driver that runs small signed modules; its official `LpcIO` module provides exactly the Super I/O register access needed to reach the EC's PWM register.
 
 Setup:
 
-1. Install PawnIO: download `PawnIO_setup.exe` from <https://pawnio.eu> and run it.
-2. Download the modules from <https://github.com/namazso/PawnIO.Modules/releases> and copy `LpcIO.bin` into the same folder as `FanControl.exe`.
-3. Run `FanControl.exe`. It asks for administrator rights.
+1. Download `FanControl-windows-x64.zip` from the [Releases](https://github.com/richardyusan/ideapad-fan-control/releases) page (or the whole [`dist/`](dist) folder) and unzip it. It contains `FanControl.exe`, `LpcIO.bin` and PawnIO's installer, `PawnIO_setup.exe`.
+2. Run `FanControl.exe`. It asks for administrator rights.
+3. If PawnIO is not installed yet, the app offers to install it from the included `PawnIO_setup.exe`. Choose **Yes** for a steady speed, or **No** to use the pulsing method; the app does not ask again after No (run `PawnIO_setup.exe` yourself later if you change your mind).
+
+Keep `LpcIO.bin` in the same folder as `FanControl.exe`. The PawnIO files are the official signed releases, included unchanged; versions, checksums and licenses are in [`dist/THIRD_PARTY.md`](dist/THIRD_PARTY.md).
 
 How it behaves:
 
-- **Runs only while open.** The app rewrites the PWM duty four times a second. Keep the window open or minimised; closing it returns the fan to the firmware.
-- **Never slower than the firmware asks.** The firmware nudges the duty one step per second towards its own target. If it keeps stepping up, it wants more cooling than your setting, and the app follows it up, then comes back down to your setting when the firmware is satisfied. This needs no temperature sensor. (Measured on Linux with the same logic: a setting of 20% climbed back to the firmware's 35% within 15 s; a setting of 60% held steady.)
-- **Only for this EC.** Nothing is written unless the chip ID reads `0x8227`.
+- **Runs only while open.** Keep the window open or minimised; closing it returns the fan to the firmware.
+- **Fast return to Automatic.** Left alone, the firmware walks the PWM duty back only one step per second, so going from 100% back to automatic would take over two minutes. When you choose Automatic (or close the app), the app instead writes a value, watches which way the firmware nudges it, and halves the interval until it finds the firmware's own target. That hands the fan back in about ten seconds.
+- **Never slower than the firmware asks** (method 1). If the firmware keeps stepping the duty up, it wants more cooling than your setting, and the app follows it up, then comes back down to your setting when the firmware is satisfied. (Measured on Linux with the same logic: a setting of 20% climbed back to the firmware's 35% within 15 s; a setting of 60% held steady.)
+- **No speed sensor with method 2.** The fan speed is only measured through PawnIO; method 2 runs on a model of how fast the fan ramps up and down.
+- **Only for this EC.** Nothing is written to the PWM register unless the chip ID reads `0x8227`.
+- **Sensors.** Windows has no standard way to read the CPU and GPU temperatures on this laptop (its ACPI tables have no thermal zone), so the window shows the fan, the SSD temperature and the firmware's fan mode instead.
 - **Lenovo Vantage** may change thermal modes on its own; if the two disagree, the firmware's request wins.
 
 ```
 FanControl.exe              open the app
-FanControl.exe status       show fan power and speed
+FanControl.exe status       show the fan state
+FanControl.exe auto         return the fan to the firmware
+FanControl.exe dust         start dust cleaning
 FanControl.exe 60           hold 60% until Ctrl+C
 FanControl.exe --hold 60    the same with no window
 ```
@@ -144,7 +159,7 @@ To hold a speed from logon without opening the window, create a Task Scheduler t
 
 ```
 src/fan_control_linux.c   Linux app (GTK 3), command line and background service
-src/fan_control_win.c     Windows app (Win32, through PawnIO)
+src/fan_control_win.c     Windows app (Win32, through PawnIO or Lenovo's Energy Management driver)
 src/app.rc, app.manifest  Windows icon, version info and manifest
 build.sh                  Build script
 install.sh                Per-user installer
