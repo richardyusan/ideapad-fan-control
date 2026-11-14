@@ -1,0 +1,14 @@
+dist/
+*.o
+.vscode/
+.idea/
+*.swp
+re-data/
+kmod/*.o
+kmod/*.ko
+kmod/*.mod*
+kmod/.*.cmd
+kmod/Module.symvers
+kmod/modules.order
+kmod/.tmp_versions/
+*.res
