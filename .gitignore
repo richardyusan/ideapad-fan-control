@@ -3,7 +3,6 @@ dist/
 .vscode/
 .idea/
 *.swp
-re-data/
 kmod/*.o
 kmod/*.ko
 kmod/*.mod*

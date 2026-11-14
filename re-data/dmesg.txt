@@ -1,0 +1,31 @@
+[    0.325135] ACPI: EC: EC started
+[    0.325137] ACPI: EC: interrupt blocked
+[    0.344623] ACPI: EC: EC_CMD/EC_SC=0x66, EC_DATA=0x62
+[    0.371223] ACPI: EC: interrupt unblocked
+[    0.371226] ACPI: EC: event unblocked
+[    0.371230] ACPI: EC: EC_CMD/EC_SC=0x66, EC_DATA=0x62
+[    0.371232] ACPI: EC: GPE=0x3
+[    4.455550] ACPI: battery: new hook: Ideapad Battery Extension
+[    4.461356] input: Ideapad extra buttons as /devices/pci0000:00/0000:00:14.3/PNP0C09:00/VPC2004:00/input/input16
+[    4.461452] ideapad_acpi VPC2004:00: Keyboard backlight control not available
+[    4.499977] ideapad_acpi VPC2004:00: DYTC_VERSION 4 support may not work. Pass ideapad_laptop.allow_v4_dytc=Y on the kernel commandline to enable
+[    4.499987] ideapad_acpi VPC2004:00: DYTC interface is not available
+[   15.249264] ideapad_acpi VPC2004:00: conservation_mode attribute has been deprecated, see charge_types.
+[ 1822.579181] ACPI: EC: interrupt blocked
+[ 1822.609074] ACPI: EC: event blocked
+[ 1822.609076] ACPI: EC: EC stopped
+[ 1822.664351] ACPI: EC: EC started
+[ 1822.704646] ACPI: EC: interrupt unblocked
+[ 1822.707493] ACPI: EC: event unblocked
+[ 4534.346820] ACPI: EC: interrupt blocked
+[ 4534.376319] ACPI: EC: event blocked
+[ 4534.376323] ACPI: EC: EC stopped
+[ 4534.440352] ACPI: EC: EC started
+[ 4534.480072] ACPI: EC: interrupt unblocked
+[ 4534.489003] ACPI: EC: event unblocked
+[ 6284.365897] ACPI: EC: interrupt blocked
+[ 6284.392574] ACPI: EC: event blocked
+[ 6284.392579] ACPI: EC: EC stopped
+[ 6284.454292] ACPI: EC: EC started
+[ 6284.494470] ACPI: EC: interrupt unblocked
+[ 6284.497708] ACPI: EC: event unblocked

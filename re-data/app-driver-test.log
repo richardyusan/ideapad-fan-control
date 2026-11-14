@@ -1,0 +1,25 @@
+== auto, driver loaded
+Fan: Automatic (firmware value 133)
+Fan speed: about 3000 rpm
+CPU: 67 °C
+GPU: 45 °C
+SSD: 41 °C
+apply 60 exit 0
+== manual 60
+Fan: Manual 60% (firmware value 133)
+Fan speed: about 3700 rpm (steady)
+CPU: 62 °C
+GPU: 45 °C
+SSD: 41 °C
+60 12860 3700 1
+driver: enable=1 pwm=153
+apply auto exit 0
+== after auto
+Fan: Automatic (firmware value 133)
+Fan speed: about 2300 rpm
+CPU: 63 °C
+GPU: 44 °C
+SSD: 41 °C
+driver: enable=2
+inactive
+rmmod ok

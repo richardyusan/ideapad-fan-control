@@ -1,0 +1,13 @@
+hwmon: /sys/class/hwmon/hwmon5
+initial: rpm=2600 pwm=97 enable=2
+pwm 128: 3200 3200 3200 3200 3200 3200 3200 3200  (readback pwm=126 enable=1)
+pwm 204: 4500 4500 4500 4500 4500 4500 4500  (readback pwm=203 enable=1)
+pwm 255: 5200 5200 5200 5200 5200 5200 5200  (readback pwm=255 enable=1)
+pwm 77: 2800 2100 2100 2100 2100 2100 2100 2100  (readback pwm=75 enable=1)
+invalid write: sh: 1: echo: echo: I/O error
+watchdog (3 s), no more writes: enable=1 1 1 2 2 2 
+after explicit auto: enable=2
+rmmod ok
+[  820.049263] ideapad_fan_pwm: loading out-of-tree module taints kernel.
+[  820.049273] ideapad_fan_pwm: module verification failed: signature and/or required key missing - tainting kernel
+[  853.625410] ideapad_fan_pwm: no pwm1 write for 3 s, back to automatic
