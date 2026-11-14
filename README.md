@@ -76,6 +76,17 @@ The driver is a standard `hwmon` device named `ideapad_fan`, so `sensors`, `fanc
 
 Without the driver and with Secure Boot on, the service switches `fan_mode` between full speed and automatic so that the **average** measured speed matches the percentage of 5200 rpm. The fan audibly rises and falls between about 2200 and 5200 rpm every few seconds, 100% has a 1 s stop every 11 s, and the average never goes below automatic control.
 
+## Download
+
+Prebuilt binaries are in [`dist/`](dist):
+
+| File | For |
+|---|---|
+| `dist/FanControl` | Linux x86_64 (needs GTK 3, which Ubuntu, Fedora, Mint and others ship) |
+| `dist/FanControl.exe` | Windows x64 (needs PawnIO and `LpcIO.bin`, see [Windows](#windows)) |
+
+The kernel driver is not prebuilt: it has to be built and signed on your own machine, which `kmod/install.sh` does.
+
 ## Install
 
 ```sh
