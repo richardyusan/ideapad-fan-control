@@ -83,6 +83,7 @@ Prebuilt binaries are in [`dist/`](dist):
 | File | For |
 |---|---|
 | `dist/FanControl` | Linux x86_64 (needs GTK 3, which Ubuntu, Fedora, Mint and others ship) |
+| `dist/ideapad-fan-control_2.2.0_amd64.deb` | Debian/Ubuntu package: `sudo apt install ./dist/ideapad-fan-control_2.2.0_amd64.deb` (built on Ubuntu with glibc 2.38+; rebuild with `./build-deb.sh`) |
 | `dist/FanControl.exe` | Windows x64 (steady speed with PawnIO and `LpcIO.bin`, pulsing speed without; see [Windows](#windows)) |
 | `dist/LpcIO.bin`, `dist/PawnIO_setup.exe` | PawnIO's module and installer, bundled for Windows (see [`dist/THIRD_PARTY.md`](dist/THIRD_PARTY.md)) |
 
