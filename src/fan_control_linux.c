@@ -58,7 +58,7 @@
 #include <unistd.h>
 
 #define APP_ID       "io.github.ideapadfancontrol"
-#define APP_VERSION  "2.1.0"
+#define APP_VERSION  "2.2.0"
 
 /* Paths can be overridden at build time to test the speed loop off-hardware. */
 #ifndef SYSFS_GLOB
